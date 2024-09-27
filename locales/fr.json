@@ -1,0 +1,94 @@
+{
+  "header": {
+    "title": "MON SITE WEB",
+    "logout": "DÉCONNEXION",
+    "login": "CONNEXION",
+    "hostLogin": "Connexion Hôte",
+    "adminLogin": "Connexion Admin"
+  },
+  "homepage": {
+    "welcome": "Bienvenue sur mon site web.",
+    "description": "Fournissez des URL de chat uniques à vos contacts afin qu'ils puissent discuter avec vous sans avoir à créer de compte.",
+    "signupPrompt": "Nouveau? Inscrivez-vous",
+    "here": "ici"
+  },
+  "hostPage": {
+    "welcome": "Bonjour {{name}}, bienvenue sur votre page hôte!",
+    "messenger": "MESSAGER",
+    "myAccount": "MON COMPTE",
+    "chatUrls": "URLS DE CHAT"
+  },
+  "hostMessengerPage": {
+    "manageChats": "Gérer les discussions",
+    "noChatsAvailable": "Aucune discussion disponible"
+  },
+  "accountPage": {
+    "title": "MON COMPTE",
+    "profileImage": "Photo de profil",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "email": "Email",
+    "address": "Adresse",
+    "zipCode": "Code postal",
+    "city": "Ville",
+    "country": "Pays",
+    "save": "SAUVEGARDER",
+    "noImage": "Pas d'image",
+    "errorFetching": "Une erreur s'est produite lors de la récupération des informations de l'hôte",
+    "errorUpdating": "Une erreur s'est produite lors de la mise à jour des informations de l'hôte",
+    "successUpdating": "Les informations de l'hôte ont été mises à jour avec succès"
+  },
+  "hostChatUrlsPage": {
+    "findUrls": "Trouvez vos URLs ci-dessous",
+    "exportToExcel": "EXPORTER VERS EXCEL",
+    "errorOccurred": "Une erreur est survenue"
+  },
+  "hostChatPage": {
+    "title": "Gestion du Chat",
+    "conversationWith": "Conversation avec",
+    "placeholderMessage": "Tapez un message...",
+    "sendButton": "Envoyer",
+    "loading": "Chargement..."
+  },
+  "guestChatPage": {
+    "title": "Gestion du Chat",
+    "conversationWith": "Conversation avec",
+    "editProfileButton": "Modifier le profil",
+    "placeholderMessage": "Tapez un message...",
+    "sendButton": "Envoyer",
+    "loading": "Chargement..."
+  },
+  "adminManagePage": {
+    "title": "MON SITE WEB",
+    "welcomeMessage": "Bonjour John, bienvenue sur votre page d'administration!",
+    "generateUrlsButton": "GÉNÉRER DES URLS DE CHAT",
+    "orderManagerButton": "GESTION DES COMMANDES",
+    "privacyPolicyButton": "POLITIQUE DE CONFIDENTIALITÉ"
+  },
+  "generateUrls": {
+    "quantity": "Quantité",
+    "email": "E-mail de l'hôte",
+    "generateButton": "GÉNÉRER DES URLS",
+    "exportButton": "EXPORTER VERS EXCEL",
+    "error": "Une erreur s'est produite"
+  },
+  "contactUs": {
+    "title": "Nous Contacter",
+    "name": "Nom",
+    "email": "E-mail",
+    "message": "Message",
+    "sendButton": "Envoyer le message",
+    "captchaRequired": "Veuillez compléter le CAPTCHA.",
+    "sending": "Envoi en cours...",
+    "success": "Message envoyé avec succès!",
+    "failure": "Échec de l'envoi du message."
+  },
+  "footer": {
+    "title": "Votre site Web",
+    "subtitle": "Rendre le web meilleur.",
+    "privacyPolicy": "Politique de confidentialité",
+    "contact": "Nous Contacter",
+    "copyright": "Votre site Web",
+    "rightsReserved": "Tous droits réservés."
+  }
+}

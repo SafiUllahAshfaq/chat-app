@@ -1,0 +1,94 @@
+{
+  "header": {
+    "title": "MY WEBSITE",
+    "logout": "LOGOUT",
+    "login": "LOGIN",
+    "hostLogin": "Host Login",
+    "adminLogin": "Admin Login"
+  },
+  "homepage": {
+    "welcome": "Welcome to my website.",
+    "description": "Provide unique chat urls to your contacts so they can chat with you without having to create an account.",
+    "signupPrompt": "New? Sign up",
+    "here": "here"
+  },
+  "hostPage": {
+    "welcome": "Hello {{name}}, welcome to your host page!",
+    "messenger": "MESSENGER",
+    "myAccount": "MY ACCOUNT",
+    "chatUrls": "CHAT URLS"
+  },
+  "hostMessengerPage": {
+    "manageChats": "Manage Chats",
+    "noChatsAvailable": "No chats available"
+  },
+  "accountPage": {
+    "title": "MY ACCOUNT",
+    "profileImage": "Profile Image",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "address": "Address",
+    "zipCode": "Zip code",
+    "city": "City",
+    "country": "Country",
+    "save": "SAVE",
+    "noImage": "No Image",
+    "errorFetching": "An error occurred while fetching host info",
+    "errorUpdating": "An error occurred while updating host info",
+    "successUpdating": "Host information updated successfully"
+  },
+  "hostChatUrlsPage": {
+    "findUrls": "Find your URLs below",
+    "exportToExcel": "EXPORT TO EXCEL",
+    "errorOccurred": "An error occurred"
+  },
+  "hostChatPage": {
+    "title": "Chat Management",
+    "conversationWith": "Conversation with",
+    "placeholderMessage": "Type a message...",
+    "sendButton": "Send",
+    "loading": "Loading..."
+  },
+  "guestChatPage": {
+    "title": "Chat Management",
+    "conversationWith": "Conversation with",
+    "editProfileButton": "Edit Profile",
+    "placeholderMessage": "Type a message...",
+    "sendButton": "Send",
+    "loading": "Loading..."
+  },
+  "adminManagePage": {
+    "title": "MY WEBSITE",
+    "welcomeMessage": "Hello John, welcome to your admin page!",
+    "generateUrlsButton": "GENERATE CHAT URLS",
+    "orderManagerButton": "ORDER MANAGER",
+    "privacyPolicyButton": "PRIVACY POLICY"
+  },
+  "generateUrls": {
+    "quantity": "Quantity",
+    "email": "Host email",
+    "generateButton": "GENERATE URLS",
+    "exportButton": "EXPORT TO EXCEL",
+    "error": "An error occurred"
+  },
+  "contactUs": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "sendButton": "Send Message",
+    "captchaRequired": "Please complete the CAPTCHA.",
+    "sending": "Sending...",
+    "success": "Message sent successfully!",
+    "failure": "Failed to send message."
+  },
+  "footer": {
+    "title": "Your Website",
+    "subtitle": "Making the web a better place.",
+    "privacyPolicy": "Privacy Policy",
+    "contact": "Contact Us",
+    "copyright": "Your Website",
+    "rightsReserved": "All rights reserved."
+  }
+}
