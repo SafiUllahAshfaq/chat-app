@@ -8,12 +8,12 @@ const apiClient = axios.create({
   },
 });
 
-const baseURL = "http://localhost:3000/api/";
+const baseURL = `${process.env.MYWEBSITE}/api/`;
 
 export const adminLogin = async (email: string, password: string) => {
   try {
-    const response = await apiClient.post(
-      `${baseURL}${apiRoutes.admin.login}`,
+    const response = await axios.post(
+      `${apiRoutes.admin.login}`,
       { email, password }
     );
     return response.data;
@@ -37,8 +37,8 @@ export const hostSignup = async (data: {
   country: string;
 }) => {
   try {
-    const response = await apiClient.post(
-      `${baseURL}${apiRoutes.host.signup}`,
+    const response = await axios.post(
+      `${apiRoutes.host.signup}`,
       data
     );
     return response.data;
@@ -53,8 +53,8 @@ export const hostSignup = async (data: {
 
 export const getHostUrls = async (email: string) => {
   try {
-    const response = await apiClient.get(
-      `${baseURL}${apiRoutes.urls.getUrls}?email=${encodeURIComponent(email)}`
+    const response = await axios.get(
+      `${apiRoutes.urls.getUrls}?email=${encodeURIComponent(email)}`
     );
     return response.data;
   } catch (error) {
@@ -68,8 +68,8 @@ export const getHostUrls = async (email: string) => {
 
 export const generateHostUrls = async (email: string, quantity: number) => {
   try {
-    const response = await apiClient.post(
-      `${baseURL}${apiRoutes.urls.create}`,
+    const response = await axios.post(
+      `${apiRoutes.urls.create}`,
       {
         hostEmail: email,
         quantity,
@@ -87,7 +87,7 @@ export const generateHostUrls = async (email: string, quantity: number) => {
 
 export const getHostInfo = async (email: string) => {
   try {
-    const response = await apiClient.get(`${baseURL}${apiRoutes.host.get}`, {
+    const response = await axios.get(`${apiRoutes.host.get}`, {
       params: { email },
     });
     return response.data;
@@ -112,8 +112,8 @@ export const updateHostInfo = async (data: {
   country: string;
 }) => {
   try {
-    const response = await apiClient.put(
-      `${baseURL}${apiRoutes.host.update}`,
+    const response = await axios.put(
+      `${apiRoutes.host.update}`,
       data
     );
     return response.data;
