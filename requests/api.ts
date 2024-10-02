@@ -13,7 +13,7 @@ const baseURL = `${process.env.MYWEBSITE}/api/`;
 export const adminLogin = async (email: string, password: string) => {
   try {
     const response = await axios.post(
-      `${apiRoutes.admin.login}`,
+      `api/${apiRoutes.admin.login}`,
       { email, password }
     );
     return response.data;
@@ -38,7 +38,7 @@ export const hostSignup = async (data: {
 }) => {
   try {
     const response = await axios.post(
-      `${apiRoutes.host.signup}`,
+      `api/${apiRoutes.host.signup}`,
       data
     );
     return response.data;
@@ -54,7 +54,7 @@ export const hostSignup = async (data: {
 export const getHostUrls = async (email: string) => {
   try {
     const response = await axios.get(
-      `${apiRoutes.urls.getUrls}?email=${encodeURIComponent(email)}`
+      `api/${apiRoutes.urls.getUrls}?email=${encodeURIComponent(email)}`
     );
     return response.data;
   } catch (error) {
@@ -69,7 +69,7 @@ export const getHostUrls = async (email: string) => {
 export const generateHostUrls = async (email: string, quantity: number) => {
   try {
     const response = await axios.post(
-      `${apiRoutes.urls.create}`,
+      `api/${apiRoutes.urls.create}`,
       {
         hostEmail: email,
         quantity,
@@ -87,7 +87,7 @@ export const generateHostUrls = async (email: string, quantity: number) => {
 
 export const getHostInfo = async (email: string) => {
   try {
-    const response = await axios.get(`${apiRoutes.host.get}`, {
+    const response = await axios.get(`api/${apiRoutes.host.get}`, {
       params: { email },
     });
     return response.data;
@@ -113,7 +113,7 @@ export const updateHostInfo = async (data: {
 }) => {
   try {
     const response = await axios.put(
-      `${apiRoutes.host.update}`,
+      `api/${apiRoutes.host.update}`,
       data
     );
     return response.data;
