@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import apiRoutes from "./routes";
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Set your API base URL here
+  baseURL: "https://main.d1rc9ktckl9jbl.amplifyapp.com/", // Set your API base URL here
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,7 +12,7 @@ const baseURL = `${process.env.MYWEBSITE}/api/`;
 
 export const adminLogin = async (email: string, password: string) => {
   try {
-    const response = await axios.post(
+    const response = await apiClient.post(
       `api/${apiRoutes.admin.login}`,
       { email, password }
     );
@@ -37,7 +37,7 @@ export const hostSignup = async (data: {
   country: string;
 }) => {
   try {
-    const response = await axios.post(
+    const response = await apiClient.post(
       `api/${apiRoutes.host.signup}`,
       data
     );
@@ -53,7 +53,7 @@ export const hostSignup = async (data: {
 
 export const getHostUrls = async (email: string) => {
   try {
-    const response = await axios.get(
+    const response = await apiClient.get(
       `api/${apiRoutes.urls.getUrls}?email=${encodeURIComponent(email)}`
     );
     return response.data;
@@ -68,7 +68,7 @@ export const getHostUrls = async (email: string) => {
 
 export const generateHostUrls = async (email: string, quantity: number) => {
   try {
-    const response = await axios.post(
+    const response = await apiClient.post(
       `api/${apiRoutes.urls.create}`,
       {
         hostEmail: email,
@@ -87,7 +87,7 @@ export const generateHostUrls = async (email: string, quantity: number) => {
 
 export const getHostInfo = async (email: string) => {
   try {
-    const response = await axios.get(`api/${apiRoutes.host.get}`, {
+    const response = await apiClient.get(`api/${apiRoutes.host.get}`, {
       params: { email },
     });
     return response.data;
@@ -112,7 +112,7 @@ export const updateHostInfo = async (data: {
   country: string;
 }) => {
   try {
-    const response = await axios.put(
+    const response = await apiClient.put(
       `api/${apiRoutes.host.update}`,
       data
     );
