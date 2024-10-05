@@ -22,7 +22,7 @@ export default async function handler(
     try {
       // Find the host ID based on the URL
       const urlEntry = await Url.findOne({
-        "urls.url": `http://localhost:3000/${guestId}`,
+        "urls.url": `https://main.d1rc9ktckl9jbl.amplifyapp.com/${guestId}`,
       });
 
       if (!urlEntry) {
@@ -34,7 +34,7 @@ export default async function handler(
 
       // Update the isActive property to false for the opened URL
       await Url.updateOne(
-        { hostEmail: hostId, "urls.url": `http://localhost:3000/${guestId}` },
+        { hostEmail: hostId, "urls.url": `https://main.d1rc9ktckl9jbl.amplifyapp.com/${guestId}` },
         { $set: { "urls.$.isActive": false } }
       );
 
