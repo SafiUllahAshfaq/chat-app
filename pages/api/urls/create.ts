@@ -1,55 +1,99 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { v4 as uuidv4 } from "uuid"; // Import the UUID library
 import dbConnect from "../../../lib/mongoose";
-import Host from "../../../models/Host";
+import Guest from "../../../models/Guest";
 import Url from "../../../models/URLs";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebase/firebase";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { method } = req;
+  const { guestId } = req.query;
+
+  if (!guestId || typeof guestId !== "string") {
+    return res.status(400).json({ message: "Invalid guestId" });
+  }
+
   await dbConnect();
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
+  if (method === "POST") {
+    try {
+      // Find the host ID based on the URL
+      const urlEntry = await Url.findOne({
+        "urls.url": `https://main.d1rc9ktckl9jbl.amplifyapp.com/${guestId}`,
+      });
 
-  const { hostEmail, quantity } = req.body;
+      if (!urlEntry) {
+        return res
+          .status(404)
+          .json({ message: "Host not found for the provided guestId" });
+      }
+      const hostId = urlEntry.hostEmail;
 
-  if (!hostEmail || typeof quantity !== "number" || quantity <= 0) {
-    return res.status(400).json({ message: "Invalid input" });
-  }
+      // Update the isActive property to false for the opened URL
+      await Url.updateOne(
+        { hostEmail: hostId, "urls.url": `https://main.d1rc9ktckl9jbl.amplifyapp.com/${guestId}` },
+        { $set: { "urls.$.isActive": false } }
+      );
 
-  try {
-    // Check if the host exists
-    const host = await Host.findOne({ email: hostEmail });
-    if (!host) {
-      return res.status(404).json({ message: "Host not found" });
+      // Check if guest already exists
+      let guest = await Guest.findOne({ guestId });
+
+      const guestCount = await Guest.countDocuments({ hostId: hostId });
+      const lastName = (guestCount + 1).toString();
+      if (!guest) {
+        // Create the guest
+        guest = new Guest({
+          guestId,
+          firstname: "Guest",
+          lastname: lastName,
+          email: "unknown",
+          address: "unknown",
+          zipCode: "0000",
+          city: "unknown",
+          country: "unknown",
+          hostId,
+        });
+        await guest.save();
+      }
+
+      // Ensure the guest document exists under the host's document
+      const guestDocRef = doc(db, `chats/${hostId}/guests/${guestId}`);
+      const guestSnapshot = await getDoc(guestDocRef);
+      if (!guestSnapshot.exists()) {
+        await setDoc(guestDocRef, {
+          guestId,
+          hostId,
+          createdAt: new Date(),
+        });
+      }
+
+      res
+        .status(201)
+        .json({ message: "Guest created and chat initiated", guest });
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: (error as Error).message,
+      });
     }
+  } else if (method === "GET") {
+    try {
+      const guest = await Guest.findOne({ guestId });
+      if (!guest) {
+        return res.status(404).json({ message: "Guest not found" });
+      }
 
-    // Generate the URLs with UUID and set isActive to true
-    const newUrls = Array.from({ length: quantity }, () => ({
-      url: `${process.env.MYWEBSITE}/${uuidv4()}`,
-      isActive: true, // Set the isActive property to true by default
-    }));
-
-    // Check if the host already has URLs stored
-    let urlEntry = await Url.findOne({ hostEmail });
-    if (urlEntry) {
-      // If URLs exist, append the new URLs to the existing array
-      urlEntry.urls = [...urlEntry.urls, ...newUrls];
-    } else {
-      // If no entry exists, create a new one
-      urlEntry = new Url({ hostEmail, urls: newUrls });
+      res.status(200).json(guest);
+    } catch (error) {
+      res.status(500).json({
+        message: "Internal server error",
+        error: (error as Error).message,
+      });
     }
-
-    await urlEntry.save();
-    return res.status(201).json({
-      message: "URLs generated and stored successfully",
-      urls: newUrls.map((urlObj) => urlObj.url),
-    });
-  } catch (error) {
-    console.error("Error generating URLs:", error);
-    return res.status(500).json({ message: "Internal server error" });
+  } else {
+    res.status(405).json({ message: "Method not allowed" });
   }
 }
