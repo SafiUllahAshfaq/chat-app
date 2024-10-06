@@ -5,8 +5,10 @@ import Footer from "../../components/Footer";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { useLanguage } from "../../context/LanguageContext"; // Import the useLanguage hook
+import { useAuth } from "../../context/AuthContext";
 
 const HomePage = () => {
+  const { isAuthenticated } = useAuth();
   const { t } = useTranslation();
   const { language } = useLanguage(); // Use the language context
   const [homeContent, setHomeContent] = useState<{
@@ -49,12 +51,28 @@ const HomePage = () => {
         <div className="w-full text-white p-4 md:py-16 md:px-56 bg-[rgba(0,0,0,0.2)] bottom-0">
           <h1 className="mt-5 text-5xl">{title}</h1>
           <h1 className="mt-5 text-2xl">{textContent}</h1>
-          <p className="mt-5">
-            {t("homepage.signupPrompt")}{" "}
-            <Link href="/signup">
-              <span className="text-blue-400">{t("homepage.here")}</span>
-            </Link>
-          </p>
+          {isAuthenticated ? (
+            <p className="mt-5">
+              {t("homepage.goto")}{" "}
+              <Link
+                href={
+                  JSON.parse(localStorage.getItem("user") || "").type ===
+                  "admin"
+                    ? "admin/manage"
+                    : "host"
+                }
+              >
+                <span className="text-blue-400">{t("homepage.menu")}</span>
+              </Link>
+            </p>
+          ) : (
+            <p className="mt-5">
+              {t("homepage.signupPrompt")}{" "}
+              <Link href="/signup">
+                <span className="text-blue-400">{t("homepage.here")}</span>
+              </Link>
+            </p>
+          )}
         </div>
       </div>
       <Footer />
