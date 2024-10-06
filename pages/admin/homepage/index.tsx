@@ -3,6 +3,8 @@ import axios from "axios";
 import AdminRoute from "../../../AuthGuards/AdminAuthGuard";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
+import { FaArrowLeft } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 const AdminHomepage = () => {
   const [backgroundImage, setBackgroundImage] = useState<string>("");
@@ -12,7 +14,8 @@ const AdminHomepage = () => {
   const [titleFre, setTitleFre] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-
+  const router = useRouter();
+  
   useEffect(() => {
     const fetchContent = async () => {
       try {
@@ -65,6 +68,12 @@ const AdminHomepage = () => {
   return (
     <AdminRoute>
       <Header title="Admin - Update Homepage" />
+      <div className="w-full p-4">
+        <FaArrowLeft
+          className="text-primary cursor-pointer"
+          onClick={() => router.push("/admin/manage")}
+        />
+      </div>
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
           <h2 className="text-xl font-bold mb-4">Update Homepage Content</h2>
