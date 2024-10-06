@@ -1,16 +1,18 @@
 {
   "header": {
-    "title": "MY WEBSITE",
+    "title": "SWURLL",
     "logout": "LOGOUT",
     "login": "LOGIN",
-    "hostLogin": "Host Login",
-    "adminLogin": "Admin Login"
+    "hostLogin": "Host login",
+    "adminLogin": "Admin login"
   },
   "homepage": {
-    "welcome": "Welcome to my website.",
-    "description": "Provide unique chat urls to your contacts so they can chat with you without having to create an account.",
+    "welcome": "Welcome to Swurll.",
+    "description": "Provide unique chat URLs to your contacts so they can chat with you without having to create an account.",
     "signupPrompt": "New? Sign up",
-    "here": "here"
+    "here": "here",
+    "goto": "Go to",
+    "menu": "Menu"
   },
   "hostPage": {
     "welcome": "Hello {{name}}, welcome to your host page!",
@@ -19,7 +21,7 @@
     "chatUrls": "CHAT URLS"
   },
   "hostMessengerPage": {
-    "manageChats": "Manage Chats",
+    "manageChats": "Manage chats",
     "noChatsAvailable": "No chats available"
   },
   "accountPage": {
@@ -44,23 +46,23 @@
     "errorOccurred": "An error occurred"
   },
   "hostChatPage": {
-    "title": "Chat Management",
+    "title": "Chat management",
     "conversationWith": "Conversation with",
     "placeholderMessage": "Type a message...",
     "sendButton": "Send",
     "loading": "Loading..."
   },
   "guestChatPage": {
-    "title": "Chat Management",
+    "title": "Chat management",
     "conversationWith": "Conversation with",
-    "editProfileButton": "Edit Profile",
+    "editProfileButton": "Edit profile",
     "placeholderMessage": "Type a message...",
     "sendButton": "Send",
     "loading": "Loading..."
   },
   "adminManagePage": {
-    "title": "MY WEBSITE",
-    "welcomeMessage": "Hello John, welcome to your admin page!",
+    "title": "SWURLL",
+    "welcomeMessage": "Hello Admin, welcome to your admin page!",
     "generateUrlsButton": "GENERATE CHAT URLS",
     "orderManagerButton": "ORDER MANAGER",
     "privacyPolicyButton": "PRIVACY POLICY"
@@ -73,22 +75,23 @@
     "error": "An error occurred"
   },
   "contactUs": {
-    "title": "Contact Us",
+    "title": "Contact us",
     "name": "Name",
     "email": "Email",
     "message": "Message",
-    "sendButton": "Send Message",
+    "sendButton": "Send message",
     "captchaRequired": "Please complete the CAPTCHA.",
     "sending": "Sending...",
     "success": "Message sent successfully!",
     "failure": "Failed to send message."
   },
   "footer": {
-    "title": "Your Website",
-    "subtitle": "Making the web a better place.",
-    "privacyPolicy": "Privacy Policy",
-    "contact": "Contact Us",
-    "copyright": "Your Website",
+    "title": "Swurll",
+    "subtitle": "Make yourself accessible.",
+    "privacyPolicy": "Privacy policy",
+    "contact": "Contact us",
+    "copyright": "Swurll",
     "rightsReserved": "All rights reserved."
   }
 }
+
