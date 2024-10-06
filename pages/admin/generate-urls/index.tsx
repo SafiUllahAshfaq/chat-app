@@ -5,6 +5,8 @@ import URLsStringComponent from "../../../components/URLsStringComponent";
 import { generateHostUrls } from "../../../requests/api";
 import { useTranslation } from "react-i18next";
 import * as XLSX from "xlsx";
+import { FaArrowLeft } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 interface UrlWithDate {
   url: string;
@@ -17,18 +19,23 @@ const GenerateUrlsPage = () => {
   const [email, setEmail] = useState("john.doe@gmail.com");
   const [urls, setUrls] = useState<UrlWithDate[]>([]);
   const [error, setError] = useState("");
+  const router = useRouter();
 
   const handleGenerateUrls = async () => {
-    try {
-      const data = await generateHostUrls(email, quantity);
-      const urlsWithDates = data.urls.map((url: string) => ({
-        url,
-        createdAt: new Date(),
-      }));
-      setUrls(urlsWithDates); // Store the generated URLs with creation date
-      setError("");
-    } catch (err) {
-      setError((err as Error).message || t("generateUrls.error"));
+    if (quantity > 0) {
+      try {
+        const data = await generateHostUrls(email, quantity);
+        const urlsWithDates = data.urls.map((url: string) => ({
+          url,
+          createdAt: new Date(),
+        }));
+        setUrls(urlsWithDates); // Store the generated URLs with creation date
+        setError("");
+      } catch (err) {
+        setError((err as Error).message || t("generateUrls.error"));
+      }
+    } else {
+      setError("Kindly enter a valid number of Quantity")
     }
   };
 
@@ -50,6 +57,12 @@ const GenerateUrlsPage = () => {
     <AdminRoute>
       <>
         <Header title={t("header.title")} />
+        <div className="w-full p-4  bg-white">
+          <FaArrowLeft
+            className="text-primary cursor-pointer"
+            onClick={() => router.push("/admin/manage")}
+          />
+        </div>
         <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
           <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
             <form>
@@ -62,8 +75,13 @@ const GenerateUrlsPage = () => {
                   id="quantity"
                   name="quantity"
                   className="w-full border border-gray-300 p-2 rounded-lg"
-                  value={quantity}
-                  onChange={(e) => setQuantity(Number(e.target.value))}
+                  value={
+                    quantity > 0 ? quantity : quantity === 0 ? "" : quantity
+                  }
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setQuantity(value === "" ? 0 : Number(value)); // Set the value to 0 if the input is empty, otherwise set the number
+                  }}
                 />
               </div>
               <div className="mb-4">
