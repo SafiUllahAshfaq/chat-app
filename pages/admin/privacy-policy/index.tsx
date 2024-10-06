@@ -3,6 +3,8 @@ import axios from "axios";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css"; // Import the styles for the editor
 import Header from "../../../components/Header";
+import { FaArrowLeft } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -10,6 +12,7 @@ const AdminPrivacyPolicy: React.FC = () => {
   const [contentEng, setContentEng] = useState("");
   const [contentFre, setContentFre] = useState("");
   const [message, setMessage] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPolicy = async () => {
@@ -41,6 +44,12 @@ const AdminPrivacyPolicy: React.FC = () => {
   return (
     <>
       <Header title="Admin - Update Privacy Policy" />
+      <div className="w-full p-4">
+        <FaArrowLeft
+          className="text-primary cursor-pointer"
+          onClick={() => router.push("/admin/manage")}
+        />
+      </div>
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-4">Update Privacy Policy</h1>
         <h2 className="text-xl mb-4">English</h2>
