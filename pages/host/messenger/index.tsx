@@ -13,7 +13,7 @@ import { db } from "../../../firebase/firebase";
 import { useAuth } from "../../../context/AuthContext";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
-import { FaUser } from "react-icons/fa";
+import { FaArrowLeft, FaUser } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
 interface Chat {
@@ -117,7 +117,14 @@ const HostMessengerPage = () => {
     <div className="flex flex-col h-screen">
       <Header title="Host Messenger" />
       <div className="flex-1 bg-gray-100 p-4 overflow-y-auto">
-        <h1 className="text-2xl font-bold mb-4">
+        <div className="w-full">
+          <FaArrowLeft
+            className="text-primary cursor-pointer"
+            onClick={() => router.push("/host")}
+          />
+        </div>
+
+        <h1 className="text-2xl font-bold mb-4 mt-4">
           {t("hostMessengerPage.manageChats")}
         </h1>
         {error && <p className="text-red-500">{error}</p>}
