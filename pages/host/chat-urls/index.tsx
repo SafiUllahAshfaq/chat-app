@@ -8,6 +8,8 @@ import HostRoute from "../../../AuthGuards/HostPrivateRoute";
 import Footer from "../../../components/Footer";
 import { useTranslation } from "react-i18next";
 import * as XLSX from "xlsx";
+import { FaArrowLeft } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 interface UrlObject {
   url: string;
@@ -20,6 +22,7 @@ const HostChatUrlsPage = () => {
   const { t } = useTranslation();
   const [urls, setUrls] = useState<UrlObject[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchUrls = async () => {
@@ -55,6 +58,9 @@ const HostChatUrlsPage = () => {
       <div className="flex flex-col h-screen">
         <Header title="MY WEBSITE" />
         <div className="flex-1 bg-pink-100 flex flex-col items-center justify-center p-4">
+        <div className="w-full">
+          <FaArrowLeft className="text-primary cursor-pointer" onClick={()=> router.push("/host")} />
+        </div>
           <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
             {error && <p className="text-red-500">{error}</p>}
             <p className="mb-3">{t("hostChatUrlsPage.findUrls")}</p>
