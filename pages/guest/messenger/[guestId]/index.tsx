@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { FaSmile, FaUser } from "react-icons/fa";
-import Picker, { EmojiClickData } from "emoji-picker-react";
+import { FaSmile, FaUser, FaPaperclip, FaTimes } from "react-icons/fa";
+import Picker from "emoji-picker-react";
 import { db } from "../../../../firebase/firebase";
 import {
   collection,
@@ -21,8 +21,9 @@ interface Message {
   id: string;
   sender: string;
   text: string;
+  image?: string;
   timestamp: Timestamp;
-  senderProfilePic?: string; // Profile picture as base64 string
+  senderProfilePic?: string;
 }
 
 interface Guest {
@@ -30,22 +31,14 @@ interface Guest {
   firstname: string;
   lastname: string;
   email: string;
-  address: string;
-  zipCode: string;
-  city: string;
-  country: string;
-  image?: string; // Image as base64 string
+  image?: string;
 }
 
 interface Host {
   firstName: string;
   lastName: string;
   email: string;
-  address: string;
-  zipCode: string;
-  city: string;
-  country: string;
-  image?: string; // Image as base64 string
+  image?: string;
 }
 
 const GuestChatPage = () => {
@@ -57,6 +50,7 @@ const GuestChatPage = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null); // State for full-screen image
 
   useEffect(() => {
     const fetchGuest = async () => {
@@ -66,8 +60,6 @@ const GuestChatPage = () => {
           throw new Error(`Failed to fetch guest data: ${response.statusText}`);
         }
         const data = await response.json();
-
-        // Convert guest image from Buffer to base64 string
         if (data.image) {
           data.image = `data:image/jpeg;base64,${Buffer.from(
             data.image
@@ -86,8 +78,6 @@ const GuestChatPage = () => {
           throw new Error(`Failed to fetch host data: ${response.statusText}`);
         }
         const data = await response.json();
-
-        // Convert host image from Buffer to base64 string
         if (data.image) {
           data.image = `data:image/png;base64,${data.image}`;
         }
@@ -109,9 +99,10 @@ const GuestChatPage = () => {
             id: doc.id,
             sender: doc.data().sender,
             text: doc.data().text,
+            image: doc.data().image,
             timestamp: doc.data().timestamp,
             senderProfilePic:
-              doc.data().sender === "Host" ? host?.image : guest?.image, // Use base64 images
+              doc.data().sender === "Host" ? host?.image : guest?.image,
           }));
           setMessages(fetchedMessages);
         });
@@ -127,12 +118,23 @@ const GuestChatPage = () => {
     }
   }, [guestId, hostId, guest?.image, host?.image]);
 
-  const sendMessage = async () => {
-    if (message.trim()) {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64Image = reader.result as string;
+        sendMessage(base64Image, true);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const sendMessage = async (content: string, isImage: boolean = false) => {
+    if (content.trim()) {
       try {
         const chatDocRef = doc(db, `chats/${hostId}/guests/${guestId}`);
 
-        // Check if guest document exists; if not, create it
         const guestSnapshot = await getDoc(chatDocRef);
         if (!guestSnapshot.exists()) {
           await setDoc(chatDocRef, {
@@ -142,12 +144,12 @@ const GuestChatPage = () => {
           });
         }
 
-        // Add the message to the messages sub-collection
         await addDoc(
           collection(db, `chats/${hostId}/guests/${guestId}/messages`),
           {
             sender: guest?.firstname + " " + guest?.lastname,
-            text: message,
+            text: !isImage ? content : "",
+            image: isImage ? content : null,
             timestamp: Timestamp.now(),
             isRead: false,
           }
@@ -159,8 +161,16 @@ const GuestChatPage = () => {
     }
   };
 
-  const onEmojiClick = (emojiData: EmojiClickData) => {
-    setMessage((prevMessage) => prevMessage + emojiData.emoji);
+  const onEmojiClick = (emojiObject: any) => {
+    setMessage((prevMessage) => prevMessage + emojiObject.emoji);
+  };
+
+  const openImageModal = (imageUrl: string) => {
+    setSelectedImage(imageUrl); // Open modal and display the selected image
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null); // Close the modal
   };
 
   if (!guest || !host) {
@@ -175,7 +185,9 @@ const GuestChatPage = () => {
           <div className="flex justify-between items-center pb-5">
             <h2 className="text-lg font-bold mb-4">
               {t("guestChatPage.conversationWith")}{" "}
-              <span className="font-normal">{host?.firstName ? host.firstName : "Host"}</span>
+              <span className="font-normal">
+                {host?.firstName ? host.firstName : "Host"}
+              </span>
             </h2>
             <button
               onClick={() => router.push(`/guest/${guestId}/account`)}
@@ -206,7 +218,6 @@ const GuestChatPage = () => {
                           <FaUser className="w-full h-full" />
                         </div>
                       )}
-
                       <div
                         className={`p-2 rounded-lg ${
                           msg.sender !== "Host"
@@ -214,7 +225,16 @@ const GuestChatPage = () => {
                             : "bg-gray-200 text-gray-700"
                         }`}
                       >
-                        <p>{msg.text}</p>
+                        {msg.image ? (
+                          <img
+                            src={msg.image}
+                            alt="Image"
+                            className="w-48 h-auto rounded-lg cursor-pointer"
+                            onClick={() => openImageModal(msg.image || "")}
+                          />
+                        ) : (
+                          <p>{msg.text}</p>
+                        )}
                       </div>
                     </div>
                   ) : (
@@ -226,11 +246,20 @@ const GuestChatPage = () => {
                             : "bg-gray-200 text-gray-700"
                         }`}
                       >
-                        <p>{msg.text}</p>
+                        {msg.image ? (
+                          <img
+                            src={msg.image}
+                            alt="Image"
+                            className="w-48 h-auto rounded-lg cursor-pointer"
+                            onClick={() => openImageModal(msg.image || "")}
+                          />
+                        ) : (
+                          <p>{msg.text}</p>
+                        )}
                       </div>
                       {msg.senderProfilePic ? (
                         <img
-                          src={msg.senderProfilePic} // Default pic if none
+                          src={msg.senderProfilePic}
                           alt="Guest"
                           className="w-8 h-8 rounded-full ml-2"
                         />
@@ -245,6 +274,26 @@ const GuestChatPage = () => {
               ))}
             </ul>
           </div>
+
+          {/* Modal for full-screen image */}
+          {selectedImage && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+              <div className="relative">
+                <img
+                  src={selectedImage}
+                  alt="Full screen"
+                  className="max-w-full max-h-screen rounded-lg"
+                />
+              </div>
+                <button
+                  className="absolute top-4 right-4 text-white text-3xl"
+                  onClick={closeModal}
+                >
+                  <FaTimes />
+                </button>
+            </div>
+          )}
+
           <div className="mt-4 flex items-center">
             <input
               type="text"
@@ -265,9 +314,22 @@ const GuestChatPage = () => {
                 </div>
               )}
             </button>
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              id="imageUpload"
+              onChange={handleImageUpload}
+            />
+            <label
+              htmlFor="imageUpload"
+              className="p-2 rounded-lg cursor-pointer"
+            >
+              <FaPaperclip className="w-5 h-5 text-gray-500" />
+            </label>
             <button
               className="ml-2 bg-primary text-white p-2 rounded-lg"
-              onClick={sendMessage}
+              onClick={() => sendMessage(message)}
             >
               {t("guestChatPage.sendButton")}
             </button>
