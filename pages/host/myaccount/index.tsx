@@ -5,6 +5,8 @@ import { getHostInfo, updateHostInfo } from "../../../requests/api";
 import { useAuth } from "../../../context/AuthContext";
 import Footer from "../../../components/Footer";
 import { useTranslation } from "react-i18next";
+import { FaArrowLeft } from "react-icons/fa";
+import { useRouter } from "next/router";
 
 const AccountPage = () => {
   const { user } = useAuth();
@@ -22,6 +24,7 @@ const AccountPage = () => {
   const [imagePreview, setImagePreview] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     const fetchHostInfo = async () => {
@@ -82,6 +85,13 @@ const AccountPage = () => {
     <HostRoute>
       <Header title="MY WEBSITE" />
       <div className="min-h-screen bg-pink-100 flex flex-col items-center justify-center p-4">
+        <div className="w-full">
+          <FaArrowLeft
+            className="text-primary cursor-pointer"
+            onClick={() => router.push("/host")}
+          />
+        </div>
+
         <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
           <h1 className="text-2xl font-bold text-center mb-6 bg-primary text-white py-2 rounded-t-lg">
             {t("accountPage.title")}
