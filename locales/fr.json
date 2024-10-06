@@ -1,20 +1,22 @@
 {
   "header": {
-    "title": "MON SITE WEB",
+    "title": "SWURLL",
     "logout": "DÉCONNEXION",
     "login": "CONNEXION",
     "hostLogin": "Connexion Hôte",
     "adminLogin": "Connexion Admin"
   },
   "homepage": {
-    "welcome": "Bienvenue sur mon site web.",
-    "description": "Fournissez des URL de chat uniques à vos contacts afin qu'ils puissent discuter avec vous sans avoir à créer de compte.",
-    "signupPrompt": "Nouveau? Inscrivez-vous",
-    "here": "ici"
+    "welcome": "Bienvenue sur Swurll.",
+    "description": "Fournissez des URLs de chat uniques à vos contacts afin qu'ils puissent discuter avec vous sans avoir à créer de compte.",
+    "signupPrompt": "Nouveau ? Inscrivez-vous",
+    "here": "ici",
+    "goto": "Aller à",
+    "menu": "Menu"
   },
   "hostPage": {
-    "welcome": "Bonjour {{name}}, bienvenue sur votre page hôte!",
-    "messenger": "MESSAGER",
+    "welcome": "Bonjour {{name}}, bienvenue sur votre page hôte !",
+    "messenger": "MESSAGERIE",
     "myAccount": "MON COMPTE",
     "chatUrls": "URLS DE CHAT"
   },
@@ -44,14 +46,14 @@
     "errorOccurred": "Une erreur est survenue"
   },
   "hostChatPage": {
-    "title": "Gestion du Chat",
+    "title": "Gestion du chat",
     "conversationWith": "Conversation avec",
     "placeholderMessage": "Tapez un message...",
     "sendButton": "Envoyer",
     "loading": "Chargement..."
   },
   "guestChatPage": {
-    "title": "Gestion du Chat",
+    "title": "Gestion du chat",
     "conversationWith": "Conversation avec",
     "editProfileButton": "Modifier le profil",
     "placeholderMessage": "Tapez un message...",
@@ -59,8 +61,8 @@
     "loading": "Chargement..."
   },
   "adminManagePage": {
-    "title": "MON SITE WEB",
-    "welcomeMessage": "Bonjour John, bienvenue sur votre page d'administration!",
+    "title": "SWURLL",
+    "welcomeMessage": "Bonjour Admin, bienvenue sur votre page d'administration !",
     "generateUrlsButton": "GÉNÉRER DES URLS DE CHAT",
     "orderManagerButton": "GESTION DES COMMANDES",
     "privacyPolicyButton": "POLITIQUE DE CONFIDENTIALITÉ"
@@ -73,22 +75,25 @@
     "error": "Une erreur s'est produite"
   },
   "contactUs": {
-    "title": "Nous Contacter",
+    "title": "Nous contacter",
     "name": "Nom",
     "email": "E-mail",
     "message": "Message",
     "sendButton": "Envoyer le message",
     "captchaRequired": "Veuillez compléter le CAPTCHA.",
     "sending": "Envoi en cours...",
-    "success": "Message envoyé avec succès!",
+    "success": "Message envoyé avec succès !",
     "failure": "Échec de l'envoi du message."
   },
   "footer": {
-    "title": "Votre site Web",
-    "subtitle": "Rendre le web meilleur.",
+    "title": "Swurll",
+    "subtitle": "Rendez-vous accessible.",
     "privacyPolicy": "Politique de confidentialité",
-    "contact": "Nous Contacter",
-    "copyright": "Votre site Web",
+    "contact": "Nous contacter",
+    "copyright": "Swurll",
     "rightsReserved": "Tous droits réservés."
   }
 }
+
+
+
