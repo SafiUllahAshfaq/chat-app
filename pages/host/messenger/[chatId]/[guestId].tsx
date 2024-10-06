@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { FaSmile, FaUser } from "react-icons/fa";
+import { FaArrowLeft, FaSmile, FaUser } from "react-icons/fa";
 import Picker from "emoji-picker-react";
 import { db } from "../../../../firebase/firebase";
 import {
@@ -152,7 +152,14 @@ const HostChatPage = () => {
   return (
     <>
       <Header title={t("hostChatPage.title")} />
+        <div className="w-full p-4">
+          <FaArrowLeft
+            className="text-primary cursor-pointer"
+            onClick={() => router.push("/host/messenger")}
+          />
+        </div>
       <div className="min-h-[90vh] bg-pink-100 flex flex-col md:flex-row">
+
         <div className="md:w-full p-4 flex flex-col relative">
           <h2 className="text-lg font-bold mb-4">
             {t("hostChatPage.conversationWith")}{" "}
