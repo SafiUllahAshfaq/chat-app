@@ -175,7 +175,7 @@ const GuestChatPage = () => {
           <div className="flex justify-between items-center pb-5">
             <h2 className="text-lg font-bold mb-4">
               {t("guestChatPage.conversationWith")}{" "}
-              <span className="font-normal">Host</span>
+              <span className="font-normal">{host?.firstName ? host.firstName : "Host"}</span>
             </h2>
             <button
               onClick={() => router.push(`/guest/${guestId}/account`)}
@@ -184,7 +184,7 @@ const GuestChatPage = () => {
               {t("guestChatPage.editProfileButton")}
             </button>
           </div>
-          <div className="flex-1 bg-gray-100 p-4 rounded-lg overflow-y-auto">
+          <div className="flex-1 bg-gray-100 p-4 rounded-lg overflow-y-auto min-h-96">
             <ul className="space-y-2">
               {messages.map((msg) => (
                 <li
@@ -260,7 +260,7 @@ const GuestChatPage = () => {
             >
               <FaSmile className="w-5 h-5 text-gray-500" />
               {showEmojiPicker && (
-                <div className="absolute bottom-12 right-0">
+                <div className="absolute bottom-12 -right-20">
                   <Picker onEmojiClick={onEmojiClick} />
                 </div>
               )}
