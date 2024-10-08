@@ -3,9 +3,11 @@ import PrivateRoute from "../../AuthGuards/HostPrivateRoute";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/AuthContext";
 
 // pages/host/HostPage.tsx
 const HostPage = () => {
+  const { user } = useAuth();
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -17,7 +19,7 @@ const HostPage = () => {
         <Header title="MY WEBSITE" />
         <div className="flex-1 bg-pink-100 flex flex-col items-center p-4 pt-10">
           <h1 className="text-xl mb-4 text-center">
-            {t("hostPage.welcome", { name: userName })}
+            {t("hostPage.welcome", { name: user?.firstName })}
           </h1>
           <div className="space-y-4 w-full max-w-xs">
             <button
