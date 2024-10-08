@@ -6,15 +6,10 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="bg-primary text-white py-8">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center">
-        {/* Left Section */}
-        <div className="mb-4 md:mb-0">
+      <div className="container mx-auto flex flex-col md:flex-row justify-center text-center items-center">
+        <div className="m-0 sm:m-0 md:ml-24 lg:ml-24 mb-4 md:mb-0">
           <h3 className="text-xl font-bold">{t("footer.title")}</h3>
           <p className="text-sm">{t("footer.subtitle")}</p>
-        </div>
-
-        {/* Navigation Links */}
-        <div className="mb-4 md:mb-0">
           <nav className="flex space-x-4">
             <Link className="hover:underline" href="/privacy-policy">
               {t("footer.privacyPolicy")}
@@ -24,8 +19,6 @@ const Footer: React.FC = () => {
             </Link>
           </nav>
         </div>
-
-        {/* Social Media Icons */}
         <div className="flex space-x-4">
           <a
             href="https://www.facebook.com"
