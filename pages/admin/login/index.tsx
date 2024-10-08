@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { FaUser, FaEye, FaEyeSlash } from "react-icons/fa";
+import { FaUser, FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
 import { adminLogin } from "../../../requests/api";
 import { useAuth } from "../../../context/AuthContext";
 
@@ -13,7 +13,6 @@ const LoginPage = () => {
   const router = useRouter();
   const { login, isAuthenticated, user } = useAuth();
 
-  
   useEffect(() => {
     if (isAuthenticated && user?.type === "admin") {
       router.push("/admin/manage");
@@ -38,6 +37,15 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-pink-100 flex flex-col items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+        <div className="flex items-center pb-4">
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => router.push("/home")}
+          >
+            <FaArrowLeft className="text-primary cursor-pointer" />
+            <span className="text-sm ml-2">Home</span>
+          </div>
+        </div>
         <div className="flex justify-center mb-4">
           <div className="h-24 w-24 rounded-full bg-primary flex items-center justify-center text-white">
             <FaUser className="w-12 h-12" />
