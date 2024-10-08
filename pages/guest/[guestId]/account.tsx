@@ -65,10 +65,8 @@ const AccountPage = () => {
         updatedData.image = guestData.image.split(",")[1]; // Extract base64 string
       }
       await axios.put(`/api/guest/update`, { guestId, ...updatedData });
-      alert(t("accountPage.successUpdating"));
     } catch (error) {
       console.error(t("accountPage.errorUpdating"), error);
-      alert(t("accountPage.errorUpdating"));
     }
   };
 
@@ -112,7 +110,7 @@ const AccountPage = () => {
                 {t("accountPage.email")}
               </label>
               <input
-                type="email"
+                type="text"
                 id="email"
                 name="email"
                 className="w-full border border-gray-300 p-2 rounded-lg"
