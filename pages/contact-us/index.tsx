@@ -14,10 +14,10 @@ const ContactUsPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!captchaToken) {
-      setStatus(t("contactUs.captchaRequired"));
-      return;
-    }
+    // if (!captchaToken) {
+    //   setStatus(t("contactUs.captchaRequired"));
+    //   return;
+    // }
     setStatus(t("contactUs.sending"));
 
     try {
@@ -78,10 +78,10 @@ const ContactUsPage = () => {
             ></textarea>
           </div>
           <div>
-            <ReCAPTCHA
+            {/* <ReCAPTCHA
               sitekey="YOUR_SITE_KEY" // Replace with your actual site key
               onChange={onCaptchaChange}
-            />
+            /> */}
           </div>
           <button type="submit" className="bg-primary text-white p-2 rounded">
             {t("contactUs.sendButton")}
