@@ -105,7 +105,10 @@ const LoginPage = () => {
             <label htmlFor="rememberMe" className="text-gray-700">
               Remember me
             </label>
-            <span className="ml-auto text-sm text-primary cursor-pointer">
+            <span
+              onClick={() => router.push("/forget-password")}
+              className="ml-auto text-sm text-primary cursor-pointer"
+            >
               Forgot password?
             </span>
           </div>
