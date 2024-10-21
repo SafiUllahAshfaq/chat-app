@@ -12,34 +12,36 @@ export default async function handler(
 
   const { name, email, message, captchaToken } = req.body;
 
-  if (!captchaToken) {
-    return res.status(400).json({ message: "Captcha is required" });
-  }
+  // if (!captchaToken) {
+  //   return res.status(400).json({ message: "Captcha is required" });
+  // }
 
   try {
-    const secretKey = process.env.RECAPTCHA_SECRET_KEY; // Store your secret key in .env file
-    const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`;
+    // const secretKey = process.env.RECAPTCHA_SECRET_KEY; // Store your secret key in .env file
+    // const verificationUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${captchaToken}`;
 
-    // Verify the reCAPTCHA token
-    const { data } = await axios.post(verificationUrl);
+    // // Verify the reCAPTCHA token
+    // const { data } = await axios.post(verificationUrl);
 
-    if (!data.success) {
-      return res.status(400).json({ message: "Captcha verification failed" });
-    }
+    // if (!data.success) {
+    //   return res.status(400).json({ message: "Captcha verification failed" });
+    // }
 
-    // Create a Nodemailer transporter
+    // Create a Nodemailer transporter using your custom SMTP settings
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "node250-eu.n0c.com", // SMTP server address
+      port: 465, // SMTP port (for SSL)
+      secure: true, // true for 465, false for 587
       auth: {
-        user: process.env.GMAIL_USER, // Your Gmail address
-        pass: process.env.GMAIL_PASSWORD, // Your Gmail password or App Password
+        user: "contact@swurll.com", // Your SMTP username
+        pass: "5pV$n2ot1J_ZR6f", // Store your SMTP password in the environment variable
       },
     });
 
     // Email content
     const mailOptions = {
       from: email,
-      to: process.env.GMAIL_USER, // The email address you want to receive the messages
+      to: "contact@swurll.com", // The email address you want to receive the messages
       subject: `New Contact Form Submission from ${name}`,
       text: `You have received a new message from ${name} (${email}):\n\n${message}`,
     };
