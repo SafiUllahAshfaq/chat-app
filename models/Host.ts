@@ -10,6 +10,8 @@ export interface IHost extends Document {
   city: string;
   country: string;
   image: Buffer | null;
+  resetCode: string | null; // New field for reset token
+  resetCodeExpiry: Date | null; // Expiry time for reset token
 }
 
 const HostSchema: Schema = new Schema({
@@ -22,6 +24,8 @@ const HostSchema: Schema = new Schema({
   city: { type: String, required: true },
   country: { type: String, required: true },
   image: { type: Buffer, default: null }, // Ensure image is of type Buffer
+  resetCode: { type: String, default: null }, // Reset token field
+  resetCodeExpiry: { type: Date, default: null }, // Expiry time for reset token
 });
 
 const Host = mongoose.models.Host || mongoose.model<IHost>("Host", HostSchema);
