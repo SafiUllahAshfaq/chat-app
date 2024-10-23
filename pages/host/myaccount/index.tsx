@@ -7,10 +7,12 @@ import Footer from "../../../components/Footer";
 import { useTranslation } from "react-i18next";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
+import { CgSpinner } from "react-icons/cg";
 
 const AccountPage = () => {
   const { user } = useAuth();
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
   const [hostInfo, setHostInfo] = useState({
     firstName: "",
     lastName: "",
@@ -72,12 +74,15 @@ const AccountPage = () => {
     e.preventDefault();
     setError("");
     setSuccess("");
-
+    setLoading(true);
     try {
       await updateHostInfo(hostInfo);
       setSuccess(t("accountPage.successUpdating"));
     } catch (err) {
       setError((err as Error).message || t("accountPage.errorUpdating"));
+    } finally {
+      setLoading(false);
+      window.scrollTo(0,0)
     }
   };
 
@@ -223,9 +228,10 @@ const AccountPage = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-primary text-white p-2 rounded"
+              className="w-full flex justify-center items-center bg-primary text-white p-2 rounded"
             >
               {t("accountPage.save")}
+              {loading && <CgSpinner className="ml-4 animate-spin" size={16} />}
             </button>
           </form>
         </div>
