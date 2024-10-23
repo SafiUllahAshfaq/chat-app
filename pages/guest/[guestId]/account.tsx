@@ -4,11 +4,14 @@ import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import { useTranslation } from "react-i18next";
+import { FaSpinner } from "react-icons/fa";
+import { CgSpinner } from "react-icons/cg";
 
 const AccountPage = () => {
   const router = useRouter();
   const { guestId } = router.query;
   const { t } = useTranslation();
+  const [loading, setLoading] = useState(false);
   const [guestData, setGuestData] = useState({
     firstname: "",
     lastname: "",
@@ -28,7 +31,11 @@ const AccountPage = () => {
           const data = response.data;
           setGuestData({
             ...data,
-            image: data.image ? `data:image/png;base64,${data.image}` : "",
+            image: data.image
+              ? `data:image/jpeg;base64,${Buffer.from(data.image).toString(
+                  "base64"
+                )}`
+              : "",
           });
         } catch (error) {
           console.error(t("accountPage.errorFetching"), error);
@@ -59,6 +66,7 @@ const AccountPage = () => {
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const updatedData = { ...guestData };
       if (guestData.image.startsWith("data:image/")) {
@@ -67,6 +75,9 @@ const AccountPage = () => {
       await axios.put(`/api/guest/update`, { guestId, ...updatedData });
     } catch (error) {
       console.error(t("accountPage.errorUpdating"), error);
+    } finally {
+      setLoading(false);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -78,6 +89,19 @@ const AccountPage = () => {
           <h1 className="text-2xl font-bold text-center mb-6 bg-primary text-white py-2 rounded-t-lg">
             {t("accountPage.title")}
           </h1>
+          <div className="flex justify-center mb-4">
+            {guestData.image ? (
+              <img
+                src={guestData.image}
+                alt="Profile"
+                className="w-32 h-32 rounded-full border-4 border-white shadow-md"
+              />
+            ) : (
+              <div className="w-32 h-32 bg-gray-200 rounded-full border-4 border-white shadow-md flex items-center justify-center">
+                <span>{t("accountPage.noImage")}</span>
+              </div>
+            )}
+          </div>
           <form onSubmit={handleFormSubmit}>
             <div className="mb-4">
               <label htmlFor="firstname" className="block text-gray-700 mb-2">
@@ -181,19 +205,13 @@ const AccountPage = () => {
                 className="w-full border border-gray-300 p-2 rounded-lg"
                 onChange={handleImageChange}
               />
-              {guestData.image && (
-                <img
-                  src={guestData.image}
-                  alt="Profile"
-                  className="mt-4 w-24 h-24 rounded-full object-cover border-2 border-white shadow"
-                />
-              )}
             </div>
             <button
               type="submit"
-              className="w-full bg-primary text-white p-2 rounded"
+              className="w-full flex justify-center items-center bg-primary text-white p-2 rounded"
             >
               {t("accountPage.save")}
+              {loading && <CgSpinner className="ml-4 animate-spin" size={16} />}
             </button>
           </form>
         </div>
