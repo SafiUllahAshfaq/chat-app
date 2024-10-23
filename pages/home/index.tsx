@@ -48,7 +48,7 @@ const HomePage = () => {
         className="text-center flex-1 bg-cover bg-center"
         style={{ backgroundImage: `url(${homeContent.backgroundImage})` }}
       >
-        <div className="w-full text-white p-4 md:py-16 md:px-56 bg-[rgba(0,0,0,0.2)] bottom-0">
+        <div className="w-full p-4 md:py-16 md:px-56 bottom-0">
           <h1 className="mt-5 text-5xl">{title}</h1>
           <h1 className="mt-5 text-2xl">{textContent}</h1>
           {isAuthenticated ? (
