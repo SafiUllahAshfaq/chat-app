@@ -75,6 +75,7 @@ const AccountPage = () => {
         updatedData.image = guestData.image.split(",")[1]; // Extract base64 string
       }
       await axios.put(`/api/guest/update`, { guestId, ...updatedData });
+      router.back();
     } catch (error) {
       const axiosError = error as AxiosError; // Cast error to AxiosError
       if (axiosError.response && axiosError.response.status === 413) {
@@ -86,7 +87,6 @@ const AccountPage = () => {
       window.scroll(0,0)
     } finally {
       setLoading(false);
-      if (errorMessage === "") router.back();
     }
   };
 
