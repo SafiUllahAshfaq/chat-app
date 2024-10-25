@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
@@ -12,6 +12,7 @@ const AccountPage = () => {
   const { guestId } = router.query;
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // State for error message
   const [guestData, setGuestData] = useState({
     firstname: "",
     lastname: "",
@@ -67,6 +68,7 @@ const AccountPage = () => {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage(""); // Reset error message
     try {
       const updatedData = { ...guestData };
       if (guestData.image.startsWith("data:image/")) {
@@ -74,10 +76,15 @@ const AccountPage = () => {
       }
       await axios.put(`/api/guest/update`, { guestId, ...updatedData });
     } catch (error) {
-      console.error(t("accountPage.errorUpdating"), error);
+      const axiosError = error as AxiosError; // Cast error to AxiosError
+      if (axiosError.response && axiosError.response.status === 413) {
+        setErrorMessage(t("accountPage.imageTooLarge")); // Set specific error message
+      } else {
+        console.error(t("accountPage.errorUpdating"), error);
+      }
     } finally {
       setLoading(false);
-      router.back();
+      if (!errorMessage) router.back();
     }
   };
 
@@ -102,6 +109,9 @@ const AccountPage = () => {
               </div>
             )}
           </div>
+          {errorMessage && (
+            <div className="mb-4 text-red-600 text-center">{errorMessage}</div>
+          )}
           <form onSubmit={handleFormSubmit}>
             <div className="mb-4">
               <label htmlFor="firstname" className="block text-gray-700 mb-2">
