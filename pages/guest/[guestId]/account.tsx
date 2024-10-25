@@ -78,8 +78,9 @@ const AccountPage = () => {
     } catch (error) {
       const axiosError = error as AxiosError; // Cast error to AxiosError
       if (axiosError.response && axiosError.response.status === 413) {
-        setErrorMessage(t("accountPage.imageTooLarge")); // Set specific error message
+        setErrorMessage("Image too large"); // Set specific error message
       } else {
+        setErrorMessage(t("accountPage.errorUpdating")); // Set specific error message
         console.error(t("accountPage.errorUpdating"), error);
       }
     } finally {
