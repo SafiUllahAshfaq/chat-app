@@ -77,7 +77,7 @@ const AccountPage = () => {
       console.error(t("accountPage.errorUpdating"), error);
     } finally {
       setLoading(false);
-      window.scrollTo(0, 0);
+      router.back();
     }
   };
 
