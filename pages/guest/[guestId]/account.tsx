@@ -83,9 +83,10 @@ const AccountPage = () => {
         setErrorMessage(t("accountPage.errorUpdating")); // Set specific error message
         console.error(t("accountPage.errorUpdating"), error);
       }
+      window.scroll(0,0)
     } finally {
       setLoading(false);
-      if (!errorMessage) router.back();
+      if (errorMessage === "") router.back();
     }
   };
 
