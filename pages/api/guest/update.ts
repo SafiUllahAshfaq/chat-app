@@ -1,7 +1,15 @@
-// pages/api/guest/update.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "../../../lib/mongoose";
 import Guest from "../../../models/Guest";
+
+// Configuring the request body parser to allow up to 3.5 MB payloads
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "3.5mb",
+    },
+  },
+};
 
 export default async function handler(
   req: NextApiRequest,
