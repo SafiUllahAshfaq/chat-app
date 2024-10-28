@@ -14,6 +14,23 @@
     "goto": "Go to",
     "menu": "Menu"
   },
+  "auth": {
+    "back": "Back",
+    "home": "Home",
+    "email": "Email",
+    "sendLink": "Send reset link",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "login": "Login",
+    "signup": "Sign up",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "save": "Save",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "alreadyHaveAccount": "Already have an account?"
+  },
   "hostPage": {
     "welcome": "Hello {{name}}, welcome to your host page!",
     "messenger": "MESSENGER",
