@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { FaArrowLeft, FaEye, FaEyeSlash, FaUser } from "react-icons/fa";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");
@@ -12,6 +13,7 @@ const ResetPassword = () => {
   const [success, setSuccess] = useState("");
   const router = useRouter();
   const { token } = router.query; // Get token from URL
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (token) {
@@ -76,7 +78,7 @@ const ResetPassword = () => {
             onClick={() => router.push("/login")}
           >
             <FaArrowLeft className="text-primary cursor-pointer" />
-            <span className="text-sm ml-2">Back</span>
+            <span className="text-sm ml-2">{t("auth.back")}</span>
           </div>
         </div>
         <div className="flex justify-center mb-4">
@@ -91,7 +93,7 @@ const ResetPassword = () => {
           {/* Password Field */}
           <div className="mb-4">
             <label htmlFor="password" className="block text-gray-700 mb-2">
-              New Password
+              {t("auth.newPassword")}
             </label>
             <div className="relative">
               <input
@@ -122,7 +124,7 @@ const ResetPassword = () => {
               htmlFor="confirmPassword"
               className="block text-gray-700 mb-2"
             >
-              Confirm Password
+              {t("auth.confirmPassword")}
             </label>
             <div className="relative">
               <input
@@ -137,7 +139,7 @@ const ResetPassword = () => {
               <div
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="absolute right-2 top-2 cursor-pointer"
-              >
+                >
                 {showConfirmPassword ? (
                   <FaEyeSlash className="w-5 h-5 text-gray-500" />
                 ) : (
@@ -150,8 +152,8 @@ const ResetPassword = () => {
           <button
             type="submit"
             className="w-full bg-primary text-white p-2 rounded"
-          >
-            Save
+            >
+            {t("auth.save")}
           </button>
         </form>
       </div>
