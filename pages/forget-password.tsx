@@ -2,12 +2,14 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { FaArrowLeft, FaUser } from "react-icons/fa";
 import axios, { AxiosError } from "axios";
+import { useTranslation } from "react-i18next";
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const router = useRouter();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +51,7 @@ const ForgetPassword = () => {
             onClick={() => router.push("/login")}
           >
             <FaArrowLeft className="text-primary cursor-pointer" />
-            <span className="text-sm ml-2">Back</span>
+            <span className="text-sm ml-2">{t("auth.back")}</span>
           </div>
         </div>
         <div className="flex justify-center mb-4">
@@ -62,7 +64,7 @@ const ForgetPassword = () => {
           {success && <p className="text-green-500 mb-4">{success}</p>}
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 mb-2">
-              Email
+              {t("auth.email")}
             </label>
             <div className="relative">
               <input
@@ -81,7 +83,7 @@ const ForgetPassword = () => {
             type="submit"
             className="w-full bg-primary text-white p-2 rounded"
           >
-            Send Reset Link
+            {t("auth.sendLink")}
           </button>
         </form>
       </div>
