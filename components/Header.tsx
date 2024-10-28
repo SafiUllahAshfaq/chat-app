@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
           <Image alt="logo" className="w-20" src={logo} />
         </Link>
       </div>
-      <nav className="relative flex">
+      <nav className="relative flex items-center">
         <div className="relative z-10">
           <button
             onClick={toggleLangDropdown}
@@ -71,28 +71,14 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
           </button>
         ) : (
           <div className="relative z-10">
-            <button
-              onClick={toggleDropdown}
-              className="text-lg focus:outline-none"
-            >
+            <Link href="/login" className="cursor-pointer">
+              {/* <button
+                onClick={toggleDropdown}
+                className="text-lg focus:outline-none"
+              >
+              </button> */}
               {t("header.login")}
-            </button>
-            {dropdownOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg">
-                <Link
-                  href="/login"
-                  className="block px-4 py-2 hover:bg-gray-200"
-                >
-                  Host Login
-                </Link>
-                <Link
-                  href="/admin/login"
-                  className="block px-4 py-2 hover:bg-gray-200"
-                >
-                  Admin Login
-                </Link>
-              </div>
-            )}
+            </Link>
           </div>
         )}
       </nav>
