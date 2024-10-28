@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { FaUser, FaEye, FaEyeSlash, FaArrowLeft } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const LoginPage = () => {
   const { login, isAuthenticated, user } = useAuth();
@@ -11,6 +12,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isAuthenticated && user?.type === "host") {
@@ -42,7 +44,7 @@ const LoginPage = () => {
             onClick={() => router.push("/home")}
           >
             <FaArrowLeft className="text-primary cursor-pointer" />
-            <span className="text-sm ml-2">Home</span>
+            <span className="text-sm ml-2">{t("auth.home")}</span>
           </div>
         </div>
         <div className="flex justify-center mb-4">
@@ -54,7 +56,7 @@ const LoginPage = () => {
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <div className="mb-4">
             <label htmlFor="email" className="block text-gray-700 mb-2">
-              Email
+              {t("auth.email")}
             </label>
             <div className="relative">
               <input
@@ -71,7 +73,7 @@ const LoginPage = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="password" className="block text-gray-700 mb-2">
-              Password
+              {t("auth.password")}
             </label>
             <div className="relative">
               <input
@@ -82,11 +84,11 @@ const LoginPage = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-              />
+                />
               <div
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-2 top-2 cursor-pointer"
-              >
+                >
                 {showPassword ? (
                   <FaEyeSlash className="w-5 h-5 text-gray-500" />
                 ) : (
@@ -103,25 +105,25 @@ const LoginPage = () => {
               className="mr-2"
             />
             <label htmlFor="rememberMe" className="text-gray-700">
-              Remember me
+            {t("auth.rememberMe")}
             </label>
             <span
               onClick={() => router.push("/forget-password")}
               className="ml-auto text-sm text-primary cursor-pointer"
-            >
-              Forgot password?
+              >
+              {t("auth.forgotPassword")}
             </span>
           </div>
           <button
             type="submit"
-            className="w-full bg-primary text-white p-2 rounded"
-          >
-            LOGIN
+            className="w-full uppercase bg-primary text-white p-2 rounded"
+            >
+            {t("auth.login")}
           </button>
         </form>
         <div className="mt-4 text-center">
           <Link href="/signup" className="text-primary">
-            Sign up
+            {t("auth.signup")}
           </Link>
         </div>
       </div>
