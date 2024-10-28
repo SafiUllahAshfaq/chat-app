@@ -14,6 +14,23 @@
     "goto": "Aller à",
     "menu": "Menu"
   },
+  "auth": {
+    "back": "Reculer",
+    "home": "Accueil",
+    "email": "Courriel",
+    "sendLink": "Envoyer le lien de réinitialisation",
+    "password": "Mot de passe",
+    "rememberMe": "Se souvenir de moi",
+    "forgotPassword": "Mot de passe oublié?",
+    "login": "Connexion",
+    "signup": "Inscription",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "save": "Enregistrer",
+    "firstName": "Prénom",
+    "lastName": "Nom de famille",
+    "alreadyHaveAccount": "Vous avez déjà un compte ?"
+  },
   "hostPage": {
     "welcome": "Bonjour {{name}}, bienvenue sur votre page hôte !",
     "messenger": "MESSAGERIE",
