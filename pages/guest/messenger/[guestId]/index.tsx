@@ -44,7 +44,7 @@ interface Host {
 const GuestChatPage = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { guestId, hostId } = router.query;
+  const { guestId } = router.query;
   const [guest, setGuest] = useState<Guest | null>(null);
   const [host, setHost] = useState<Host | null>(null);
   const [message, setMessage] = useState("");
@@ -65,13 +65,15 @@ const GuestChatPage = () => {
             data.image
           ).toString("base64")}`;
         }
+        fetchHost(data?.hostId);
+        fetchMessages(data?.hostId);
         setGuest(data);
       } catch (error) {
         console.error("Error fetching guest", error);
       }
     };
 
-    const fetchHost = async () => {
+    const fetchHost = async (hostId: string) => {
       try {
         const response = await fetch(`/api/host/get?email=${hostId}`);
         if (!response.ok) {
@@ -81,13 +83,14 @@ const GuestChatPage = () => {
         if (data.image) {
           data.image = `data:image/png;base64,${data.image}`;
         }
+        console.log({ data });
         setHost(data);
       } catch (error) {
         console.error("Error fetching host", error);
       }
     };
 
-    const fetchMessages = async () => {
+    const fetchMessages = async (hostId: string) => {
       if (guestId && hostId) {
         const messagesQuery = query(
           collection(db, `chats/${hostId}/guests/${guestId}/messages`),
@@ -111,12 +114,10 @@ const GuestChatPage = () => {
       }
     };
 
-    if (guestId && hostId) {
+    if (guestId) {
       fetchGuest();
-      fetchHost();
-      fetchMessages();
     }
-  }, [guestId, hostId, guest?.image, host?.image]);
+  }, [guestId, guest?.image, host?.image]);
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -133,19 +134,19 @@ const GuestChatPage = () => {
   const sendMessage = async (content: string, isImage: boolean = false) => {
     if (content.trim()) {
       try {
-        const chatDocRef = doc(db, `chats/${hostId}/guests/${guestId}`);
+        const chatDocRef = doc(db, `chats/${host?.email}/guests/${guestId}`);
 
         const guestSnapshot = await getDoc(chatDocRef);
         if (!guestSnapshot.exists()) {
           await setDoc(chatDocRef, {
             guestId,
-            hostId,
+            hostId: host?.email,
             createdAt: Timestamp.now(),
           });
         }
 
         await addDoc(
-          collection(db, `chats/${hostId}/guests/${guestId}/messages`),
+          collection(db, `chats/${host?.email}/guests/${guestId}/messages`),
           {
             sender: guest?.firstname + " " + guest?.lastname,
             text: !isImage ? content : "",
@@ -285,12 +286,12 @@ const GuestChatPage = () => {
                   className="max-w-full max-h-screen rounded-lg"
                 />
               </div>
-                <button
-                  className="absolute top-4 right-4 text-white text-3xl"
-                  onClick={closeModal}
-                >
-                  <FaTimes />
-                </button>
+              <button
+                className="absolute top-4 right-4 text-white text-3xl"
+                onClick={closeModal}
+              >
+                <FaTimes />
+              </button>
             </div>
           )}
 
