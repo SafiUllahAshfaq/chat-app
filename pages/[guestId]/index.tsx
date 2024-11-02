@@ -13,7 +13,7 @@ const GuestChatRedirect = () => {
         const response = await axios.post(`/api/guest/${guestId}`);
         if (response.status === 201) {
           const hostId = response.data.guest.hostId; // Assume the hostId is returned in the response
-          router.push(`/guest/messenger/${guestId}?hostId=${hostId}`);
+          router.push(`/guest/messenger/${guestId}`);
         } else {
           console.error("Failed to create guest", response.data);
         }
