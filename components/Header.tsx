@@ -6,6 +6,7 @@ import { FaCaretDown } from "react-icons/fa";
 import logo from "./../public/logo-white.png";
 import Image from "next/image";
 import { useLanguage } from "../context/LanguageContext"; // Import the useLanguage hook
+import { useRouter } from "next/router";
 
 interface HeaderProps {
   title: string;
@@ -17,7 +18,9 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const { t } = useTranslation();
   const { language, setLanguage } = useLanguage(); // Use the context
-  const guestPage = window.location.pathname.includes("guest/messenger");
+  const router = useRouter();
+  const pathname = router.pathname;
+  const guestPage = pathname.includes("guest/messenger");
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -72,16 +75,16 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
           </button>
         ) : (
           <div className="relative z-10">
-            {!guestPage &&
-            <Link href="/login" className="cursor-pointer">
-              {/* <button
+            {!guestPage && (
+              <Link href="/login" className="cursor-pointer">
+                {/* <button
                 onClick={toggleDropdown}
                 className="text-lg focus:outline-none"
               >
               </button> */}
-              {t("header.login")}
-            </Link>
-            }
+                {t("header.login")}
+              </Link>
+            )}
           </div>
         )}
       </nav>
