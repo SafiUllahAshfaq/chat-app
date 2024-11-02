@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css"; // Import the styles for the editor
+import "react-quill/dist/quill.snow.css";
 import Header from "../../../components/Header";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/router";
@@ -18,14 +18,17 @@ const AdminPrivacyPolicy: React.FC = () => {
     const fetchPolicy = async () => {
       try {
         const response = await axios.get("/api/privacy-policy/get");
-        setContentEng(response.data.contentEng);
-        setContentFre(response.data.contentFre);
+        setContentEng(response.data.contentEng || "");
+        setContentFre(response.data.contentFre || "");
       } catch (error) {
         console.error("Error fetching privacy policy:", error);
       }
     };
 
-    fetchPolicy();
+    // Fetch only on client-side
+    if (typeof window !== 'undefined') {
+      fetchPolicy();
+    }
   }, []);
 
   const handleUpdate = async () => {
@@ -34,7 +37,7 @@ const AdminPrivacyPolicy: React.FC = () => {
         contentEng,
         contentFre,
       });
-      setMessage(response.data.message);
+      setMessage(response.data.message || "Privacy policy updated successfully");
     } catch (error) {
       console.error("Error updating privacy policy:", error);
       setMessage("Failed to update privacy policy");
