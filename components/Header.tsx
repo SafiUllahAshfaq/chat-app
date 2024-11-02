@@ -17,6 +17,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const { t } = useTranslation();
   const { language, setLanguage } = useLanguage(); // Use the context
+  const guestPage = window.location.pathname.includes("guest/messenger");
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -71,6 +72,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
           </button>
         ) : (
           <div className="relative z-10">
+            {!guestPage &&
             <Link href="/login" className="cursor-pointer">
               {/* <button
                 onClick={toggleDropdown}
@@ -79,6 +81,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
               </button> */}
               {t("header.login")}
             </Link>
+            }
           </div>
         )}
       </nav>
