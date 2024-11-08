@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import apiRoutes from "./routes";
 
 const apiClient = axios.create({
-  baseURL: "https://main.d1rc9ktckl9jbl.amplifyapp.com/", // Set your API base URL here
+  baseURL: "https://swurll.com", // Set your API base URL here
   headers: {
     "Content-Type": "application/json",
   },
