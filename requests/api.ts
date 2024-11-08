@@ -2,13 +2,13 @@ import axios, { AxiosError } from "axios";
 import apiRoutes from "./routes";
 
 const apiClient = axios.create({
-  baseURL: "https://swurll.com", // Set your API base URL here
+  baseURL: "https://swurll.com/api", // Set your API base URL here
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-const baseURL = `${process.env.MYWEBSITE}/api/`;
+const baseURL = `https://swurll.com/api`;
 
 export const adminLogin = async (email: string, password: string) => {
   try {
